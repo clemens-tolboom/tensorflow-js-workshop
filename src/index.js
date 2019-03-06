@@ -1,10 +1,11 @@
 import * as ui from './ui';
+import {Webcam} from './webcam';
 
 // The number of classes we want to predict.
 const NUM_CLASSES = undefined;
 
 // A webcam class that generates Tensors from the images from the webcam.
-const webcam = undefined;
+const webcam = new Webcam(document.getElementById('webcam'));
 
 // The dataset object where we will store activations.
 const controllerDataset = undefined;
@@ -37,6 +38,14 @@ async function predict() {
 
 async function init() {
     console.log('Init - start');
+
+    try {
+        await webcam.setup();
+    } catch (e) {
+        document.getElementById('no-webcam').style.display = 'block';
+    }
+
+    ui.init();
 
     console.log('Init - finished');
 }
